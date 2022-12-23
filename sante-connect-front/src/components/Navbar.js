@@ -1,0 +1,1 @@
+// Put a navbar here with home, forum and logout links

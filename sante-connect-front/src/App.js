@@ -16,18 +16,24 @@ import Forum from './components/Forum.js';
 function App() {
   return (
     <BrowserRouter>
-        <Routes>
-        {/* Unprotected */}
-          <Route path="/sign-in" element={<SignIn />} /> 
-          <Route path="/sign-up" element={<SignUp />} /> 
-          {/* All these pages have to be protected */}
-          <Route path="/" element={<Dashboard />} > 
-            <Route path="/user" element={<User />} />
-            <Route path="/post/:id" element={<Post />} />
-            <Route path="/comment" element={<Comment />} />
-            <Route path="/forum" element={<Forum />} />
+      <Routes>
+      {/* Unprotected */} 
+        <Route path="/sign-in" element={<SignIn />} /> 
+        <Route path="/sign-up" element={<SignUp />} /> 
+        {/* All these pages have to be protected */}
+        <Route path="/" element={<Dashboard />} > 
+          <Route path="/users" element={<User />}>
+            <Route path="/users/:id" element={<User />} />
           </Route>
-        </Routes>
+          <Route path="/posts" element={<Post />} />
+            <Route path="/posts/:id" element={<Post />} >
+          </Route>
+          <Route path="/comments" element={<Comment />} >
+            <Route path="/comments/:id" element={<Comment />} />
+          </Route>
+          <Route path="/forum" element={<Forum />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

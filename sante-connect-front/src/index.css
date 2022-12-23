@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner&display=swap');
 
-html {
+body {
     background: url(./img/background_connexion.jpeg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
