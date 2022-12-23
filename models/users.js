@@ -8,24 +8,22 @@ const UserSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    default: 0,
+    required: true,
+    default: 18,
   },
   gender: {
     type: String,
-    required: true,
   },
   occupation: {
     type: String,
-    required: false,
   },
   country: {
     type: String,
-    required: false,
   },        
 
 });
 
-const User = mongoose.model("User", UserSchema);
+const Users = mongoose.model("User", UserSchema);
 
 
-export default User
+export default Users
