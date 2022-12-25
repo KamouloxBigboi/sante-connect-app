@@ -1,11 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
-import postRoute from "./routes/posts.js"
 import postsRoute from "./routes/posts.js"
-import userRoute from "./routes/users.js"
 import usersRoute from "./routes/users.js"
-import commentRoute from "./routes/comments.js"
 import commentsRoute from "./routes/comments.js"
 
 const PORT = 5000
@@ -17,12 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // All protected routes
-app.use("/posts", postRoute );
-app.use("/posts/:id", postsRoute);
+app.use("/posts", postsRoute );
 app.use("/users", usersRoute);
-app.use("/users/:id", userRoute) 
 app.use("/comments", commentsRoute);
-app.use("/comments/:id", commentRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port + ${PORT}`);

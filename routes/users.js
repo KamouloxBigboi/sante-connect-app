@@ -7,7 +7,7 @@ const router = express.Router();
 
 // show all
 
-router.get("/user", async (res) => {
+router.get("/", async (req, res) => {
     const users = await Users.find({});
         try {
             res.send(users);
@@ -18,10 +18,10 @@ router.get("/user", async (res) => {
 
 // show one
 
-router.get("/user/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     const user = await Users.findOne({ id: req.params.id });
         try {
-            res.get(user);
+            res.send(user);
         } catch (error) {
             res.status(500).send(error);
         }
@@ -29,7 +29,7 @@ router.get("/user/:id", async (req, res) => {
 
 // Create One
 
-router.post("/user", async (req, res) => {    
+router.post("/", async (req, res) => {    
     const user = new Users(req.body);
         try {
         await user.save();
@@ -39,13 +39,15 @@ router.post("/user", async (req, res) => {
         }
     });
 
-// Delete one 
-router.delete("users/:id"), async (req, res) => {
+// Delete one
+
+router.delete("/:id"), async (req, res) => {
     const user = await Users.findOneAndDelete({ id : req.params.id });
         try {
-            res.delete(user);
+            res.send(user);
         } catch(error) {
             res.status(500).send(error);
         }
 };
+
 export default router

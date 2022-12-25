@@ -7,10 +7,10 @@ const router = express.Router();
 
 // Show all
 
-router.get("/posts", async (req, res) => {
+router.get("/", async (req, res) => {
   const posts = await Posts.find({});
     try {
-        res.get(posts);
+        res.send(posts);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -18,7 +18,7 @@ router.get("/posts", async (req, res) => {
 
 // Show one
 
-router.get("/posts/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const post = await Posts.findOne({ id: req.params.id });
     try {
       res.send(post);
@@ -29,7 +29,7 @@ router.get("/posts/:id", async (req, res) => {
 
 // Create one 
 
-router.post("/posts", async (req, res) => {    
+router.post("/", async (req, res) => {    
   const post = new Posts(req.body);
     try {
       await post.save();
@@ -41,7 +41,7 @@ router.post("/posts", async (req, res) => {
 
 // Delete one
 
-router.delete("posts/:id"), async (req, res) => {
+router.delete("/:id"), async (req, res) => {
   const post = await Posts.findOneAndDelete({ id : req.params.id });
       try {
           res.delete(post);

@@ -64,10 +64,11 @@ h2 {
     color: black;
     text-align: end;
     margin-top: 0;
+    padding-right: 2em;
     position: fixed;
     width: 100%;
     bottom: 0;
-    font-size: 25px;
+    font-size: 20px;
     height: 7%;
 }
 #brand_footer {
@@ -83,4 +84,8 @@ h2 {
 }
 .notfound-container {
     text-align: center;
+}
+div.MuiBox-root {
+    background-color: white;
+    padding: 2em;
 }
