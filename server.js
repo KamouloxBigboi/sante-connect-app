@@ -25,10 +25,6 @@ app.listen(PORT, () => {
   mongoose.set('strictQuery', true);
   mongoose.connect(
     `mongodb+srv://KGuidadou:ddQ1kwJWSrcHVdaB@portfolio.osycsdj.mongodb.net/SanteConnect`, 
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
   );
 
   db.on("error", console.error.bind(console, "connection error: "));

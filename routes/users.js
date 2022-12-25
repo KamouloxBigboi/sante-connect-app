@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 
 // show one
 
-router.get("/:id", async (req, res) => {
-    const user = await Users.findOne({ id: req.params.id });
+router.get("/:lastname", async (req, res) => {
+    const user = await Users.findOne({ id: req.params.lastname});
         try {
             res.send(user);
         } catch (error) {
