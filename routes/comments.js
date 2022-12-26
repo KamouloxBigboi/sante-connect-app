@@ -3,7 +3,7 @@ import express from 'express';
 
 const router = express.Router();
 
-// Création des routes POST / GET / DELETE
+// Creation des routes POST / GET / DELETE
 
 // Show all
 
@@ -21,7 +21,9 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {    
     const comment = new Comments(req.body);
         try {
-        await comment.save();
+        await comment.save()
+            .then((console.log("Commentaire enregistré")))
+            .catch((console.log("Error")))
         res.send(comment);
         } catch (error) {
         res.status(500).send(error);

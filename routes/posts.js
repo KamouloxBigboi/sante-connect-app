@@ -32,7 +32,9 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {    
   const post = new Posts(req.body);
     try {
-      await post.save();
+      await post.save()
+        .then(() => console.log ("Article enregistré dans la base de donnée"))
+        .catch(() => console.log("Error"))
       res.send(post);
     } catch (error) {
       res.status(500).send(error);
@@ -44,7 +46,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id"), async (req, res) => {
   const post = await Posts.findOneAndDelete({ id : req.params.id });
       try {
-          res.delete(post);
+          res.send(post);
       } catch(error) {
           res.status(500).send(error);
       }

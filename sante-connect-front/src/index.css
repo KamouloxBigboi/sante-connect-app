@@ -21,13 +21,14 @@ a:hover, a:visited, a:link, a:active
 }
 
 h2 {
-    margin-left: 11rem;
-    margin-right: 11rem;
-    margin-top: 2rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    margin-top: 5.4rem;
     margin-bottom: 6rem;
     text-align: center;
     font-family: 'Edu TAS Beginner', cursive;
-    font-size:xx-large;
+    font-size: 1.5rem;
+    border-radius: 13px;
     background-color: blanchedalmond;
 }
 
@@ -64,16 +65,16 @@ h2 {
     color: black;
     text-align: end;
     margin-top: 0;
-    padding-right: 2em;
     position: fixed;
     width: 100%;
     bottom: 0;
     font-size: 20px;
-    height: 7%;
+    height: 5%;
 }
 #brand_footer {
 
     margin:auto;
+    padding-right: 5%;
     
 }
 
@@ -82,8 +83,15 @@ h2 {
     margin-bottom: 4rem;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
+
 .notfound-container {
+    margin-top: 20%;
     text-align: center;
+    color:#551a8b;
+}
+
+.err404-return-home {
+    cursor: pointer;
 }
 div.MuiBox-root {
     background-color: white;

@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 
 // show one
 
-router.get("/:lastname", async (req, res) => {
-    const user = await Users.findOne({ id: req.params.lastname});
+router.get("/:id", async (req, res) => {
+    const user = await Users.findOne({ id: req.params.id});
         try {
             res.send(user);
         } catch (error) {
@@ -32,7 +32,9 @@ router.get("/:lastname", async (req, res) => {
 router.post("/", async (req, res) => {    
     const user = new Users(req.body);
         try {
-        await user.save();
+        await user.save()
+            .then(() => console.log("Utilisateur enregistré"))
+            .catch(() => console.log("Error"))
         res.send(user);
         } catch (error) {
         response.status(500).send(error);

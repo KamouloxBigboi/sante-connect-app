@@ -11,6 +11,7 @@ import User from './components/User.js';
 import Post from './components/Post.js';
 import Comment from './components/Comment.js';
 import Forum from './components/Forum.js';
+import APropos from './components/APropos.js';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       {/* Unprotected */} 
         <Route path='*' element={<NotFound />}/>
         <Route path="/sign-in" element={<SignIn />} /> 
-        <Route path="/sign-up" element={<SignUp />} /> 
+        <Route path="/sign-up" element={<SignUp />} />
         {/* All these pages have to be protected */}
         <Route path="/" element={<Dashboard />} /> 
         <Route path="/users" element={<User />} />
@@ -29,6 +30,7 @@ function App() {
         <Route path="/comments" element={<Comment />} />
         <Route path="/comments/:id" element={<Comment />} />
         <Route path="/forum" element={<Forum />} />
+        <Route path="/a-propos" element={<APropos />} />
       </Routes>
     </BrowserRouter>
   );
