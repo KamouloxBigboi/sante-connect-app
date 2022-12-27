@@ -1,30 +1,35 @@
-import './NavbarStyles.css'
+// Data for navbar menu in logged condition with protected options 
+// CSS Styles are the same for both navbars
 
-export const MenuData = [
+import './navbar-styles.css'
+
+export const MenuDataLogged = [
     {
         title: "Articles",
         url: "/",
         className: "nav-links",
-        icon: "fa-solid fa-posts"
     },
     {
         title: "Forum",
         url: "/forum",
         className: "nav-links",
-        icon: "fa-solid fa-forum"
     },
+    {
+        title: "Profil",
+        url: "/users",
+        className: "Nav-links"
+    },
+
     {
         title: "À propos",
         url: "/a-propos",
         className: "nav-links",
-        icon: "fa-solid fa-website-info"
     },
     {
         title: "Se déconnecter",
         url: "/sign-in",
         className: "nav-links",
-        icon: "fa-solid fa-logout"
     },
 ]
 
-export default MenuData;
+export default MenuDataLogged; 

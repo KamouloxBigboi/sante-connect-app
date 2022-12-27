@@ -3,25 +3,29 @@ import { BrowserRouter,
          Routes, 
          Route } from 'react-router-dom';
 
-import SignIn from './screens/SignIn.js';
-import SignUp from './screens/SignUp.js'
-import Dashboard from './components/Dashboard.js';
-import NotFound from './components/NotFound.js';
-import User from './components/User.js';
-import Post from './components/Post.js';
-import Comment from './components/Comment.js';
-import Forum from './components/Forum.js';
-import APropos from './components/APropos.js';
+import SignIn from './screens/sign-in.js';
+import SignUp from './screens/sign-up.js'
+import Dashboard from './components/dashboard.js';
+import NotFound from './components/not-found.js';
+import User from './components/profile.js';
+import Post from './components/post.js';
+import Comment from './components/comment.js';
+import Forum from './components/forum.js';
+import APropos from './components/about.js';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-      {/* Unprotected */} 
-        <Route path='*' element={<NotFound />}/>
+
+        {/* Non- protected (screens) */}
+
         <Route path="/sign-in" element={<SignIn />} /> 
         <Route path="/sign-up" element={<SignUp />} />
-        {/* All these pages have to be protected */}
+        <Route path='*' element={<NotFound />}/>
+      
+        {/* All these pages have to be protected */}    
+      
         <Route path="/" element={<Dashboard />} /> 
         <Route path="/users" element={<User />} />
         <Route path="/users/:id" element={<User />} />
@@ -30,7 +34,7 @@ function App() {
         <Route path="/comments" element={<Comment />} />
         <Route path="/comments/:id" element={<Comment />} />
         <Route path="/forum" element={<Forum />} />
-        <Route path="/a-propos" element={<APropos />} />
+        <Route path="/about" element={<APropos />} />
       </Routes>
     </BrowserRouter>
   );

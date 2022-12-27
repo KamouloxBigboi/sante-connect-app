@@ -1,4 +1,4 @@
-import Posts from "../models/posts.js";
+import Posts from "../models/post.model.js";
 import express from 'express';
 
 const router = express.Router();

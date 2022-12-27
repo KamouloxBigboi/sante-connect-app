@@ -1,4 +1,4 @@
-import Users from "../models/users.js";
+import Users from "../models/user.model.js";
 import express from 'express';
 
 const router = express.Router();

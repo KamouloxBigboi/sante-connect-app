@@ -1,9 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
-import postsRoute from "./routes/posts.js"
-import usersRoute from "./routes/users.js"
-import commentsRoute from "./routes/comments.js"
+// import authRoute from "./routes/auth.routes.js"
+import postsRoute from "./routes/post.routes.js"
+import usersRoute from "./routes/user.routes.js"
+import commentsRoute from "./routes/comment.routes.js"
 
 const PORT = 5000
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // All protected routes
+// app.use("/", authRoute)
 app.use("/posts", postsRoute );
 app.use("/users", usersRoute);
 app.use("/comments", commentsRoute);

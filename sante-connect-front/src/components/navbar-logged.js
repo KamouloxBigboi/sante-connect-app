@@ -1,12 +1,11 @@
-// Put a navbar here with home, forum and logout links
+// Put a navbar here with protected options : home, forum, about and logout links
+
 import React from "react";
 import { Component } from "react";
-import { MenuData } from "./MenuData";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-import './NavbarStyles.css' 
+import { MenuDataLogged } from "./menudata-logged.js";
+import './navbar-styles.css' 
 
-class Navbar extends Component{
+class NavbarLogged extends Component{
     render(){
         return(
             <nav className="NavbarItems">
@@ -15,11 +14,8 @@ class Navbar extends Component{
                         <img src={require("../img/logo.png")} width='80%' alt="logo"/>
                     </a>
                 </h1>
-                <div className="menu-icons">
-                    <FontAwesomeIcon icon="fa-solid fa-bars" />
-                </div>
                 <ul className="nav-menu">
-                {MenuData.map((item, index) => {
+                {MenuDataLogged.map((item, index) => {
                     return (
                         <li key={index}>
                             <a href={item.url}
@@ -35,4 +31,4 @@ class Navbar extends Component{
     }
 }
 
-export default Navbar;
+export default NavbarLogged;

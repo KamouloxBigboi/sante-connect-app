@@ -22,20 +22,10 @@
     justify-content: start;
     cursor: pointer;
 }
-/* 
-.fa-react {
-    color: white;
-    margin-left: 0.2rem;
-    font-size: 1.6rem;
-} */
-/* 
-.fa-bars {
-    color:#2cb6b8;
-} */
 
 .nav-menu{
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(5, auto);
     gap: 50px;
     list-style: none;
     align-items: center;

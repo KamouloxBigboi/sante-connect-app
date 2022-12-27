@@ -1,4 +1,4 @@
-import Comments from "../models/comments.js";
+import Comments from "../models/comment.model.js";
 import express from 'express';
 
 const router = express.Router();
