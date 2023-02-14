@@ -17,7 +17,7 @@ export const MenuDataLogged = [
     {
         title: "Profil",
         url: "/users",
-        className: "Nav-links"
+        className: "nav-links"
     },
 
     {

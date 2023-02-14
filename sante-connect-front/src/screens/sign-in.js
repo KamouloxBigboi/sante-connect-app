@@ -15,8 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import backGround from '../img/background_connexion.jpeg'
 import { createTheme, 
-         ThemeProvider } from '@mui/material/styles';
-// import Navbar from '../components/navbar';
+         ThemeProvider } from '@mui/material/styles'; 
 import Footer from '../components/footer';
 
 function Copyright(props) {
