@@ -3,9 +3,9 @@ import { BrowserRouter,
          Routes, 
          Route } from 'react-router-dom';
 
-import SignIn from './screens/sign-in.js';
-import SignUp from './screens/sign-up.js'
-import Secret from './screens/secret.js';
+import SignIn from './screens/sign-in.jsx';
+import SignUp from './screens/sign-up.jsx'
+import Secret from './screens/secret.jsx';
 import Dashboard from './components/dashboard.js';
 import NotFound from './components/not-found.js';
 import User from './components/profile.js';
@@ -28,7 +28,7 @@ function App() {
       
         {/* All these pages have to be protected */}    
       
-        <Route path="/Dashboard" element={<Dashboard />} /> 
+        <Route path="/dashboard" element={<Dashboard />} /> 
         <Route path="/users" element={<User />} />
         <Route path="/users/:id" element={<User />} />
         <Route path="/posts" element={<Post />} />

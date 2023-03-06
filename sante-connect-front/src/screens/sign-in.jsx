@@ -15,24 +15,23 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import backGround from '../img/background_connexion.jpeg'
-import { createTheme, 
-  ThemeProvider } from '@mui/material/styles'; 
-  import Footer from '../components/footer';
+import { createTheme, ThemeProvider } from '@mui/material/styles'; 
+import Footer from '../components/footer';
   
-  function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="/about">
-          Santé Connect
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="/about">
+        Santé Connect
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
   
-  const theme = createTheme();
+const theme = createTheme();
 
 export default function SignIn() {
   const [values, setValues] = useState({
@@ -40,27 +39,31 @@ export default function SignIn() {
     password: "",
   })
   
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try{
-      const { data } = await axios.post("http://localhost:3000/sign-in", {
-        ...values,
-      })
-      console.log({
-        email: data.get('email'),
-        password: data.get('password')
-      });
-    } catch (err) {
-      console.log(err);
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  try{
+    const { data } = await axios.post("http://localhost:3000/sign-in", {
+      ...values,
+    });
+    console.log({
+      email: data.get('email'),
+      password: data.get('password')
+    });
+    if (data) {
+      if (data.errors) {
+      } else {
+
+      }
     }
-  };
-  
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   return (
-
+    
     <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: '100vh' }}>
-          {/* <Navbar /> */}
           <CssBaseline />
           <Grid
             item
@@ -91,7 +94,7 @@ export default function SignIn() {
               <Typography component="h1" variant="h5">
                 Connectez-vous 
               </Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
                   required
@@ -122,7 +125,8 @@ export default function SignIn() {
                   control={<Checkbox value="remember" color="primary" />}
                   label="Se Rappeler de moi "
                 />
-                <Button href="/"
+                <Button 
+                  // href="/"
                   type="submit"
                   fullWidth
                   variant="contained"

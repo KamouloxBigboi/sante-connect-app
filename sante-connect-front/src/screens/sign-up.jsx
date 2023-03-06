@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
+// import utils from '../utils.js'
 import axios from 'axios';  
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,7 +20,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="localhost:3000/">
+      <Link color="inherit" href="localhost:3000/about">
         Santé Connect
       </Link>{' '}
       {new Date().getFullYear()}
@@ -32,8 +33,11 @@ const theme = createTheme();
 
 export default function SignUp() {
   const [values, setValues] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
     age: "",
+    password: "",
     gender: "",
     occupation: "",
     country: "",
@@ -44,10 +48,16 @@ export default function SignUp() {
     try{
       const { data } = await axios.post("http://localhost:3000/sign-up", {
         ...values,
+      },
+      {
+        withCredentials: true,
       })
       console.log({
+        firstname: data.get('firstname'),
+        lastname: data.get('lastname'),
         email: data.get('email'),
         age: data.get('age'),
+        password: data.get('password'),
         gender: data.get('gender'),
         occupation: data.get('occupation'),
         country: data.get('country'),
@@ -59,7 +69,6 @@ export default function SignUp() {
 
   return (
       <ThemeProvider theme={theme}>
-      {/* <Navbar /> */}
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -76,15 +85,15 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
               Inscription 
             </Typography>
-            <Box component="form" noValidate onSubmit={(event) => handleSubmit(event)} sx={{ mt: 3 }}>
+            <Box component="form" onSubmit={(event) => handleSubmit(event)} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     autoComplete=" Prénom "
-                    name="firstName"
+                    name="firstname"
                     required
                     fullWidth
-                    id="firstName"
+                    id="firstname"
                     label=" Prénom "
                     autoFocus
                     onChange={(event)=>
@@ -96,9 +105,9 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    id="lastName"
+                    id="lastname"
                     label=" Nom "
-                    name="lastName"
+                    name="lastname"
                     autoComplete=" Nom "
                     onChange={(event)=>
                       setValues({...values, [event.target.name]: event.target.value })
@@ -197,7 +206,7 @@ export default function SignUp() {
               <Grid container justifyContent="center">
                 <Grid item>
                   <Link href="./sign-in" variant="body2">
-                    Vous avez déjà un compte chez Santé Connect ? <br/> Connectez-vous !
+                    Déjà un compte chez Santé Connect ? <br/> Connectez-vous !
                   </Link>
                 </Grid>
               </Grid>
