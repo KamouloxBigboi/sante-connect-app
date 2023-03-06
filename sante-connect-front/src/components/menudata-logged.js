@@ -15,14 +15,14 @@ export const MenuDataLogged = [
         className: "nav-links",
     },
     {
-        title: "Profil",
+        title: "Votre compte",
         url: "/users",
         className: "nav-links"
     },
 
     {
-        title: "À propos",
-        url: "/a-propos",
+        title: "SC Kézaco ?",
+        url: "/about",
         className: "nav-links",
     },
     {

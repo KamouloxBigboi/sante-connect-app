@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';  
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -29,16 +31,30 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [values, setValues] = useState({
+    email: "",
+    age: "",
+    gender: "",
+    occupation: "",
+    country: "",
+  })
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      age: data.get('age'),
-      gender: data.get('gender'),
-      occupation: data.get('occupation'),
-      country: data.get('country'),
-    });
+    try{
+      const { data } = await axios.post("http://localhost:3000/sign-up", {
+        ...values,
+      })
+      console.log({
+        email: data.get('email'),
+        age: data.get('age'),
+        gender: data.get('gender'),
+        occupation: data.get('occupation'),
+        country: data.get('country'),
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -60,7 +76,7 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
               Inscription 
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={(event) => handleSubmit(event)} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -71,6 +87,9 @@ export default function SignUp() {
                     id="firstName"
                     label=" Prénom "
                     autoFocus
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    } 
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -81,6 +100,9 @@ export default function SignUp() {
                     label=" Nom "
                     name="lastName"
                     autoComplete=" Nom "
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -91,6 +113,9 @@ export default function SignUp() {
                     label=" Adresse Email "
                     name="email"
                     autoComplete=" Adresse Email "
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -101,6 +126,9 @@ export default function SignUp() {
                     type="age"
                     id="age"
                     autoComplete=" Age "
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -112,6 +140,9 @@ export default function SignUp() {
                     type="password"
                     id="password"
                     autoComplete=" Mot de passe "
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -122,6 +153,9 @@ export default function SignUp() {
                     type="gender"
                     id="gender"
                     autoComplete="Sexe ou Genre (facultatif)"
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -132,6 +166,9 @@ export default function SignUp() {
                     type="occupation"
                     id="occupation"
                     autoComplete=" Profession (facultatif)"
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -143,6 +180,9 @@ export default function SignUp() {
                     type="country"
                     id="country"
                     autoComplete=" Pays "
+                    onChange={(event)=>
+                      setValues({...values, [event.target.name]: event.target.value })
+                    }
                   />
                 </Grid>
               </Grid>

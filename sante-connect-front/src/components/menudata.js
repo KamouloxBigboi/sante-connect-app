@@ -16,7 +16,7 @@ export const MenuData = [
     },
     {
         title: "À propos",
-        url: "/a-propos",
+        url: "/about",
         className: "nav-links",
     }
 ];
