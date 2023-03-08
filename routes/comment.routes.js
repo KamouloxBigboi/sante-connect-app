@@ -1,13 +1,13 @@
-import Comments from "../models/comment.model.js";
-import express from 'express';
+const Comments = require("../models/comment.model.js");
+const express = require('express');
 
-const router = express.Router();
+const app = express();
 
 // Creation des routes POST / GET / DELETE
 
 // Show all
 
-router.get("/", async (req, res) => {
+app.get("/", async (req, res) => {
     const comments = await Comments.findOne({});
         try {
             res.send(comments);
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     
 // Create one
 
-router.post("/", async (req, res) => {    
+app.post("/", async (req, res) => {    
     const comment = new Comments(req.body);
         try {
         await comment.save()
@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     
 // Show one
 
-router.get("/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
     const comment = await Comments.findOne({ id: req.params.id });
         try {
             res.send(comment);
@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
 
 // Delete one
 
-router.delete("/:id"), async (req, res) => {
+app.delete("/:id"), async (req, res) => {
     const comment = await Comments.findOneAndDelete({ id : req.params.id });
         try {
             res.send(comment);
@@ -52,4 +52,4 @@ router.delete("/:id"), async (req, res) => {
         }
 };
 
-export default router
+module.exports = app

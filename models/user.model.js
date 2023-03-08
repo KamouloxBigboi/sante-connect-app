@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 
-let validateEmail = function(email) {
-  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email);
-};
+// let validateEmail = function(email) {
+//   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//     return re.test(email);
+// };
 
 const UserSchema = new mongoose.Schema({
 
@@ -19,13 +19,18 @@ const UserSchema = new mongoose.Schema({
 
   email: {
     type: String,
-    trim: true,
+    // trim: true,
     lowercase: true,
     unique: true,
-    required: [true, "Pour l'inscription, votre adresse email est requise"],
-    validate: [validateEmail, " Merci d'inscrire un email valide "],
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, " Merci d'inscrire un email valide "]
+    required: [true, "Vous devez indiquer une adresse email"],
+    // validate: [validateEmail, " Merci d'inscrire un email valide "],
+    // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, " Merci d'inscrire un email valide "]
 },
+
+  password: {
+    type: String,
+    required: [true, "Vous devez indiquer un mot de passe"]
+  },
 
   age: {
     type: Number,
@@ -44,7 +49,4 @@ const UserSchema = new mongoose.Schema({
   
 });
 
-const Users = mongoose.model("User", UserSchema);
-
-
-export default Users
+module.exports = mongoose.model("Users", UserSchema);

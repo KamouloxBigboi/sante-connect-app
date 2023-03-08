@@ -1,13 +1,13 @@
-import Posts from "../models/post.model.js";
-import express from 'express';
+const Posts = require("../models/post.model.js");
+const express = require('express');
 
-const router = express.Router();
+const app = express.Router();
 
 // Création des routes GET (All & One) / POST (One)/ DELETE (One)
 
 // Show all
 
-router.get("/", async (req, res) => {
+app.get("/", async (req, res) => {
   const posts = await Posts.find({});
     try {
         res.send(posts);
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
 // Show one
 
-router.get("/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
   const post = await Posts.findOne({ id: req.params.id });
     try {
       res.send(post);
@@ -29,7 +29,7 @@ router.get("/:id", async (req, res) => {
 
 // Create one 
 
-router.post("/", async (req, res) => {    
+app.post("/", async (req, res) => {    
   const post = new Posts(req.body);
     try {
       await post.save()
@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 
 // Delete one
 
-router.delete("/:id"), async (req, res) => {
+app.delete("/:id"), async (req, res) => {
   const post = await Posts.findOneAndDelete({ id : req.params.id });
       try {
           res.send(post);
@@ -53,4 +53,4 @@ router.delete("/:id"), async (req, res) => {
 };
 
 
-export default router
+module.exports = app
