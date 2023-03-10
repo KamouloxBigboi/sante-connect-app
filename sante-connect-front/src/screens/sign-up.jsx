@@ -45,7 +45,7 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try{
-      const { data } = await axios.post("http://localhost:5000/users", {
+      const { data } = await axios.post("http://localhost:5000/sign-up", {
         ...values,
       },
       {
@@ -130,10 +130,10 @@ export default function SignUp() {
                   <TextField
                     fullWidth
                     name="age"
-                    label=" Age (facultatif)"
+                    label=" Age "
                     type="age"
                     id="age"
-                    autoComplete=" Age "
+                    autoComplete=" Age (Obligatoire et avoir au moins 16 ans) "
                     onChange={(event)=>
                       setValues({...values, [event.target.name]: event.target.value })
                     }
@@ -157,7 +157,7 @@ export default function SignUp() {
                   <TextField
                     fullWidth
                     name="gender"
-                    label=" Sexe ou genre (facultatif)"
+                    label=" Sexe ou genre"
                     type="gender"
                     id="gender"
                     autoComplete="Sexe ou Genre (facultatif)"
@@ -170,7 +170,7 @@ export default function SignUp() {
                   <TextField
                     fullWidth
                     name="occupation"
-                    label=" Profession "
+                    label=" Profession"
                     type="occupation"
                     id="occupation"
                     autoComplete=" Profession (facultatif)"

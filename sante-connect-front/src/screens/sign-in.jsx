@@ -42,7 +42,7 @@ export default function SignIn() {
 const handleSubmit = async (event) => {
   event.preventDefault();
   try{
-    const { data } = await axios.post("/http://localhost:5000/users", {
+    const { data } = await axios.post("/http://localhost:5000/sign-in", {
       ...values,
     });
     console.log({

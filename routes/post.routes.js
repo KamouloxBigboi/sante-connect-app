@@ -2,21 +2,21 @@ const Posts = require('../models/post.model.js');
 const express = require('express');
 const cors = require('cors');
 
-const app = express.Router();
+const postRoutes = express.Router();
 
-app.use(cors({
+postRoutes.use(cors({
   origin: ['http://localhost:3000'],
   method: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
-  credentials: false,
+  credentials: true,
 }));
 
-app.use(cors());
+postRoutes.use(cors());
 
 // Création des routes GET (All & One) / POST (One)/ DELETE (One)
 
 // Show all
 
-app.get("/", async (req, res) => {
+postRoutes.get("/", async (req, res) => {
   const posts = await Posts.find({});
     try {
         res.send(posts);
@@ -27,8 +27,8 @@ app.get("/", async (req, res) => {
 
 // Show one
 
-app.get("/:id", async (req, res) => {
-  const post = await Posts.findOne({ id: req.params.id });
+postRoutes.get("/:id", async (req, res) => {
+  const post = await Posts.findOne({_id: req.params.id });
     try {
       res.send(post);
     } catch (error) {
@@ -38,28 +38,34 @@ app.get("/:id", async (req, res) => {
 
 // Create one 
 
-app.post("/", async (req, res) => {    
+postRoutes.post("/", async (req, res) => {    
   const post = new Posts(req.body);
     try {
       await post.save()
-        .then(() => console.log ("Article enregistré dans la base de donnée"))
-        .catch(() => console.log("Error"))
+        .then(() => console.log ("L'article a été publié avec succès"))
+        .catch(() => console.log("L'article n'a pas pu être publié"))
       res.send(post);
     } catch (error) {
-      res.status(500).send(error);
+      res.status(400).json({
+        message : "L'article n'a pas pu être publié"
+      })
     }
 });
 
 // Delete one
 
-app.delete("/:id"), async (req, res) => {
-  const post = await Posts.findOneAndDelete({ id : req.params.id });
+postRoutes.delete("/:id"), async (req, res) => {
+  const post = await Posts.findOneAndDelete({_id : req.params.id });
       try {
-          res.send(post);
+          res.status(200).json({
+            message : "Article supprimé avec succès"
+          });
       } catch(error) {
-          res.status(500).send(error);
+          res.status(400).json({
+            message : "Erreur : l'article n'a pas pu être supprimé"
+          });
       }
 };
 
 
-module.exports = app
+module.exports = postRoutes
