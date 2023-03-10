@@ -23,6 +23,7 @@
     "icons": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
     "mui": "^0.0.1",
+    "nodemon": "^2.0.21",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",

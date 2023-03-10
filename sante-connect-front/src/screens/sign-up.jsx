@@ -45,7 +45,7 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try{
-      const { data } = await axios.post("http://localhost:3000/sign-up", {
+      const { data } = await axios.post("http://localhost:5000/users", {
         ...values,
       },
       {

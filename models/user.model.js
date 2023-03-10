@@ -1,30 +1,35 @@
 const mongoose = require('mongoose')
 
-// let validateEmail = function(email) {
-//   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//     return re.test(email);
-// };
+let validateEmail = function(email) {
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email);
+};
 
 const UserSchema = new mongoose.Schema({
 
-  firstname: {
+  id: { 
     type: String,
     required: true,
+  },
+
+  firstname: {
+    type: String,
+    required: [true, "Vous devez indiquer votre (vos) prénom(s)"],
   },
 
   lastname: {
     type: String,
-    required: true,
+    required: [true, "Vous devez indiquer votre nom de famille"]
   },
 
   email: {
     type: String,
-    // trim: true,
+    trim: true,
     lowercase: true,
     unique: true,
     required: [true, "Vous devez indiquer une adresse email"],
-    // validate: [validateEmail, " Merci d'inscrire un email valide "],
-    // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, " Merci d'inscrire un email valide "]
+    validate: [validateEmail, " Merci d'inscrire un email valide "],
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, " Merci d'inscrire un email valide "]
 },
 
   password: {
@@ -44,7 +49,7 @@ const UserSchema = new mongoose.Schema({
 
   country: {
     type: String,
-    required: true,
+    required: [true, "Veuillez indiquer votre pays"],
   },        
   
 });

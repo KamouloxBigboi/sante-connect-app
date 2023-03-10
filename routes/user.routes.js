@@ -1,9 +1,14 @@
 const Users = require("../models/user.model.js");
 const express = require('express');
+const cors = require('cors');
 
 const app = express.Router();
 
-// Création des routes GET (All & One) / POST (One)/ DELETE (One)
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    method: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    credentials: false,
+  }));
 
 // show all
 
@@ -11,8 +16,10 @@ app.get("/", async (req, res) => {
     const users = await Users.find({});
         try {
             res.send(users);
-        } catch (error) {
-            res.status(500).send(error);
+            console.log(res);
+        } catch (err) {
+            res.status(500).send(err);
+            console.log(err);
         }
         });
 
@@ -22,8 +29,10 @@ app.get("/:id", async (req, res) => {
     const user = await Users.findOne({ id: req.params.id});
         try {
             res.send(user);
-        } catch (error) {
-            res.status(500).send(error);
+            console.log(res);
+        } catch (err) {
+            res.status(500).send(err);
+            console.log(err)
         }
     });
 
@@ -34,10 +43,11 @@ app.post("/", async (req, res) => {
         try {
         await user.save()
             .then(() => console.log("Utilisateur enregistré"))
-            .catch(() => console.log("Error"))
+            .catch(() => console.log("Erreur : l'utilisateur n'a pas pu être enregistré"))
         res.send(user);
-        } catch (error) {
-        response.status(500).send(error);
+        } catch (err) {
+        response.status(500).send(err);
+        console.log(err)
         }
     });
 
@@ -52,4 +62,4 @@ app.delete("/:id"), async (req, res) => {
         }
 };
 
-module.exports = app;
+module.exports = app;

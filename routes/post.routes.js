@@ -1,7 +1,16 @@
-const Posts = require("../models/post.model.js");
+const Posts = require('../models/post.model.js');
 const express = require('express');
+const cors = require('cors');
 
 const app = express.Router();
+
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  method: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+  credentials: false,
+}));
+
+app.use(cors());
 
 // Création des routes GET (All & One) / POST (One)/ DELETE (One)
 
