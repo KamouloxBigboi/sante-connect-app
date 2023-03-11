@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
 const authRoutes = require("./routes/auth.routes.js");
-const postsRoutes = require("./routes/post.routes.js");
-const usersRoutes = require("./routes/user.routes.js");
 
 const PORT = 5000
 
@@ -36,6 +34,4 @@ app.listen(PORT, () => {
   app.use(express.urlencoded({ extended: true }));
   
   app.use("/", authRoutes)
-  app.use("/posts", postsRoutes );
-  app.use("/users", usersRoutes);
   

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -15,7 +16,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import backGround from '../img/background_connexion.jpeg'
-import { createTheme, ThemeProvider } from '@mui/material/styles'; 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ToastContainer, toast} from "react-toastify";
 import Footer from '../components/footer';
   
 function Copyright(props) {
@@ -34,27 +36,44 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  })
-  
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  try{
-    const { data } = await axios.post("/http://localhost:5000/sign-in", {
-      ...values,
-    });
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    });
-    if (data) {
-      if (data.errors) {
-      } else {
 
+  const navigate = useNavigate()
+  
+  const [values, setValues] = useState({email: "", password: ""})
+
+// Générateur d'erreur avec toast pour l'affichage
+
+  const generateError = (err) => {
+    toast.error(err, {
+      position: "bottom-right",
+    });
+  };
+
+  // Fonction enregistrement utilisateur dans la base de donnée asynchrone
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try{
+      const { data } = await axios.post(
+          "http://localhost:5000/sign-in", 
+        {
+          ...values,
+        },
+        {
+          withCredentials: true,
+        }
+       );
+
+      console.log(data)
+      if (data) {
+        if (data.errors) {
+          const {email, password} = data.errors;
+          if (email) generateError(email);
+          else if (password) generateError(password);
+        } else {
+        navigate("/")
       }
-    }
+    } 
   } catch (err) {
     console.log(err);
   }
@@ -146,6 +165,7 @@ const handleSubmit = async (event) => {
                     </Link>
                   </Grid>
                 </Grid>
+                <ToastContainer />
                 <Copyright sx={{ mt: 5 }} />
               </Box>
             </Box>

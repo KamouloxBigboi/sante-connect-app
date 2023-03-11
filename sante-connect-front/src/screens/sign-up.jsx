@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
-import axios from 'axios';  
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -13,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, 
          ThemeProvider } from '@mui/material/styles';
+import { ToastContainer, toast} from "react-toastify";
 import Footer from '../components/footer';
 
 function Copyright(props) {
@@ -31,6 +33,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+
+  const navigate = useNavigate()
+  
   const [values, setValues] = useState({
     firstname: "",
     lastname: "",
@@ -42,29 +47,43 @@ export default function SignUp() {
     country: "",
   })
 
+// Générateur d'erreur avec toast pour l'affichage
+
+  const generateError = (err) => {
+    toast.error(err, {
+      position: "bottom-right",
+    });
+  };
+
+  // Fonction enregistrement utilisateur dans la base de donnée asynchrone
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try{
-      const { data } = await axios.post("http://localhost:5000/sign-up", {
-        ...values,
-      },
-      {
-        withCredentials: true,
-      })
-      console.log({
-        firstname: data.get('firstname'),
-        lastname: data.get('lastname'),
-        email: data.get('email'),
-        age: data.get('age'),
-        password: data.get('password'),
-        gender: data.get('gender'),
-        occupation: data.get('occupation'),
-        country: data.get('country'),
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+      const { data } = await axios.post(
+          "http://localhost:5000/sign-up", 
+        {
+          ...values,
+        },
+        {
+          withCredentials: true,
+        }
+       );
+
+      console.log(data)
+      if (data) {
+        if (data.errors) {
+          const {email, password} = data.errors;
+          if (email) generateError(email);
+          else if (password) generateError(password);
+        } else {
+        navigate("/")
+      }
+    } 
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   return (
       <ThemeProvider theme={theme}>
@@ -211,9 +230,10 @@ export default function SignUp() {
               </Grid>
             </Box>
           </Box>
+          <ToastContainer />
           <Copyright sx={{ mt: 5 }} />
         </Container>
         <Footer />
       </ThemeProvider>
   );
-}
+};

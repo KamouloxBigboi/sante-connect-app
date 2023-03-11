@@ -1,4 +1,3 @@
-const Posts = require("../models/post.model");
 const Users = require("../models/user.model.js");
 const express = require('express');
 const jwt = require('jsonwebtoken')
@@ -9,56 +8,39 @@ app.use(cors());
 
 const maxAge = 3*24*60*60;
 
+// Création de jeton unique par utilisateur enregistré 
+
 const createToken =  (id) => {
     return jwt.sign({id}, "kenshin le vagabond", {
         expiresIn: maxAge,
     });
 }
 
-module.exports.SignIn = async (req, res) => {
-    try{
-        const {id,
-               type: { enum: [post,
-                              comment]},
-               post_uid,
-               content,
-               author_id,
-               timestamp,
-               vote_count,
-               comment_count,
-               parent_id,
-               votes: [{vote_id,
-                        voted_user_id,}]
-                } = req.body;
+// Fonction de gestion de l'erreur "email déjà existant"
 
-        const newPost = await Posts.create({id,
-                                         type: { enum: [post,
-                                                    comment]},
-                                         post_uid,
-                                         content,
-                                         author_id,
-                                         timestamp,
-                                         vote_count,
-                                         comment_count,
-                                         parent_id,
-                                         votes: [{vote_id,
-                                                 voted_user_id,}]
-                                        })
+const handleErrors = (err) => {
+    let errors = { email: "", password:"" };
 
-        const token = createToken(newPost._id, created = true)
+    if (err.message ==="Mot de passe incorrecte, réessayez")
+    errors.email = "Cet mot de passe est incorrecte";
 
-        res.cookie("jwt", token,{
-            withCredentials: true,
-            httpOnly: false,
-            maxAge: maxAge*1000,
-        })
+    if (err.message ==="Nous n'avons trouvé aucun compte avec cet email")
+    errors.email = "Cet email n'est pas enregistré";
 
-        res.status(201).json({post:newPost._id, created: true });
-               
-        } catch (err) {
-        console.log(err);
+    if (err===11000) {
+        errors.email = "Cet adresse email existe déjà !";
+        return errors;
+    };
+
+    if (err.message.includes("Users validation failed")) {
+        Object.values(err.errors).forEach(({properties}) => {
+            errors[properties.path] = properties.message;
+        });
     }
+    return errors; 
 };
+
+
 
 module.exports.SignUp = async (req, res) => {
     try{
@@ -70,7 +52,6 @@ module.exports.SignUp = async (req, res) => {
                  gender, 
                  occupation, 
                  country} = req.body;
-
         const newUser = await Users.create({firstname, 
                                          lastname, 
                                          email,
@@ -79,19 +60,34 @@ module.exports.SignUp = async (req, res) => {
                                          gender, 
                                          occupation, 
                                          country});
-
         const token = createToken(newUser._id);
-
         res.cookie("jwt", token,{
             withCredentials: true,
             httpOnly: false,
             maxAge: maxAge*1000,
         })
-
         res.status(201).json({user:newUser._id, created: true });
-
     } catch (err) {
         console.log(err);
-    }
-};  
-
+        const errors = handleErrors(err);
+        res.json({errors, created: false});
+        };
+    };  
+    
+    module.exports.SignIn = async (req, res) => {
+        try{
+            const  { email, password } = req.body;
+            const newUser = await Users.login({ email, password });
+            const token = createToken(newUser._id);
+            res.cookie("jwt", token,{
+                withCredentials: true,
+                httpOnly: false,
+                maxAge: maxAge*1000,
+            })
+            res.status(200).json({user:newUser._id, created: true });
+            } catch (err) {
+            console.log(err);
+            const errors = handleErrors(err);
+            res.json({errors, created: false});
+            }
+        };  

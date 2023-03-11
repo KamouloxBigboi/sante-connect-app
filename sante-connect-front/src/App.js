@@ -12,7 +12,8 @@ import User from './components/profile.js';
 import Post from './components/post.js';
 import Comment from './components/comment.js';
 import Forum from './components/forum.js';
-import APropos from './components/about.js'
+import APropos from './components/about.js';  
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
