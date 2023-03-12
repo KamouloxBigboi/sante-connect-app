@@ -8,7 +8,7 @@ let validateEmail = function(email) {
     return re.test(email);
 };
 
-const UserSchema = new mongoose.Schema({
+const UserSignUpSchema = new mongoose.Schema({
 
   id: { 
     type: String,
@@ -58,22 +58,10 @@ const UserSchema = new mongoose.Schema({
 
 // Encryptage du mot de passe de l'utilisateur enregistré dans la base de donnée
 
-UserSchema.pre("save", async function(next){
+UserSignUpSchema.pre("save", async function(next){
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 })
 
-UserSchema.statics.login = async function(email, password) {
-  const user = await this.findOne({ email });
-  if(user) {
-    const auth = await bcrypt.compare(password, user.password);
-    if(auth) {
-      return user; 
-    }
-    throw Error("Mot de passe incorrecte, réessayez")
-  }
-  throw Error("Nous n'avons trouvé aucun compte avec cet email")
-}
-
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("UsersSignUp", UserSignUpSchema);
