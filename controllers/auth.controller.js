@@ -88,8 +88,8 @@ module.exports.SignUp = async (req, res) => {
             })
             res.status(200).json({user:user._id, created: true });
             } catch (err) {
-            console.log(err);
-            const errors = handleErrors(err);
-            res.json({errors, created: false});
+                console.log(err);
+                const errors = handleErrors(err);
+                res.json({errors, created: false});
             }
         };  
