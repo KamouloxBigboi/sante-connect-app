@@ -49,8 +49,8 @@ export default function SignIn() {
     });
   };
 
-  // Fonction enregistrement utilisateur dans la base de donnée asynchrone
-
+  // Fonction enregistrement utilisateur asynchrone dans la base de donnée
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     try{

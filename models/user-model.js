@@ -8,10 +8,10 @@ let validateEmail = function(email) {
     return re.test(email);
 };
 
-const UserSignUpSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
 
   id: { 
-    type: String,
+    type: Number,
     required: false,
   },
 
@@ -26,7 +26,7 @@ const UserSignUpSchema = new mongoose.Schema({
   },
 
   email: {
-    type: String,
+    type: Object, 
     trim: true,
     lowercase: true,
     unique: true,
@@ -36,7 +36,7 @@ const UserSignUpSchema = new mongoose.Schema({
 },
 
   password: {
-    type: String,
+    type: Object,
     required: [true, "Vous devez indiquer un mot de passe"]
   },
 
@@ -58,10 +58,24 @@ const UserSignUpSchema = new mongoose.Schema({
 
 // Encryptage du mot de passe de l'utilisateur enregistré dans la base de donnée
 
-UserSignUpSchema.pre("save", async function(next){
+UserSchema.pre("save", async function(next){
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 })
 
-module.exports = mongoose.model("UsersSignUp", UserSignUpSchema);
+// Se logger avec l'email et le mot de passe
+
+UserSchema.statics.login = async function(email, password) {
+  const user = await this.findOne({email});
+  if(user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if(auth) {
+      return user; 
+    }
+    throw Error("Mot de passe incorrect");
+  }
+  throw Error("Email incorrect");
+};
+
+module.exports = mongoose.model("Users", UserSchema);

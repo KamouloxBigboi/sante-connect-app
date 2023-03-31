@@ -77,7 +77,7 @@ export default function SignUp() {
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-        navigate("/")
+        navigate("/sign-in")
       }
     } 
   } catch (err) {

@@ -1,5 +1,4 @@
-const UsersSignUp = require("../models/user-sign-up-model");
-const UsersSignIn = require("../models/user-sign-in-model");
+const User = require("../models/user-model");
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
@@ -22,10 +21,10 @@ const createToken =  (id) => {
 const handleErrors = (err) => {
     let errors = { email: "", password:"" };
 
-    if (err.message ==="Mot de passe incorrecte, réessayez")
+    if (err.message ==="Mot de passe incorrect")
     errors.email = "Cet mot de passe est incorrecte";
 
-    if (err.message ==="Nous n'avons trouvé aucun compte avec cet email")
+    if (err.message ==="Email incorrect")
     errors.email = "Cet email n'est pas enregistré";
 
     if (err===11000) {
@@ -54,7 +53,7 @@ module.exports.SignUp = async (req, res) => {
                  occupation, 
                  country} = req.body;
 
-        const newUser = await UsersSignUp.create({firstname, 
+                const newUser = await User.create({firstname, 
                                                   lastname, 
                                                   email,
                                                   age, 
@@ -66,6 +65,8 @@ module.exports.SignUp = async (req, res) => {
         res.cookie("jwt", token,{
             withCredentials: true,
             httpOnly: false,
+            secure: true,
+            sameSite: true,
             maxAge: maxAge*1000,
         })
         res.status(201).json({user:newUser._id, created: true });
@@ -79,14 +80,16 @@ module.exports.SignUp = async (req, res) => {
     module.exports.SignIn = async (req, res) => {
         try{
             const  { email, password } = req.body;
-            const user = await UsersSignIn.login({ email, password });
+            const user = await User.login(email, password);
             const token = createToken(user._id);
             res.cookie("jwt", token,{
                 withCredentials: true,
                 httpOnly: false,
+                secure: true,
+                sameSite: true,
                 maxAge: maxAge*1000,
             })
-            res.status(200).json({user:user._id, created: true });
+            res.status(200).json({user: user._id, created: true });
             } catch (err) {
                 console.log(err);
                 const errors = handleErrors(err);
