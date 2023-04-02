@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 
-// Fonction qui interdit d'entrer un email non valide
+// Fonction email valide (regex)
 
 let validateEmail = function(email) {
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -10,40 +10,35 @@ let validateEmail = function(email) {
 
 const UserSchema = new mongoose.Schema({
 
-  id: { 
-    type: Number,
-    required: false,
-  },
-
   firstname: {
     type: String,
-    required: [true, "Vous devez indiquer votre (vos) prénom(s)"],
+    required: true
   },
 
   lastname: {
     type: String,
-    required: [true, "Vous devez indiquer votre nom de famille"]
+    required: true
   },
 
   email: {
-    type: Object, 
+    type: Object,
     trim: true,
     lowercase: true,
     unique: true,
-    required: [true, "Vous devez indiquer une adresse email"],
+    required: [false, "Pour l'inscription, votre adresse email est requise"],
     validate: [validateEmail, " Merci d'inscrire un email valide "],
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, " Merci d'inscrire un email valide "]
 },
 
   password: {
     type: Object,
-    required: [true, "Vous devez indiquer un mot de passe"]
-  },
+    required: [true, "Tapez votre mot de passe"]
+   },
 
   age: {
     type: Number,
     required: true,
-    min: 16,
+    min: 16
   },
 
   gender: String,
@@ -52,11 +47,12 @@ const UserSchema = new mongoose.Schema({
 
   country: {
     type: String,
-    required: [true, "Veuillez indiquer votre pays"],
-  },  
+    required: true
+  }       
+  
 });
 
-// Encryptage du mot de passe de l'utilisateur enregistré dans la base de donnée
+// Encryptage des mdp dans la base de donnée avec bcrypt
 
 UserSchema.pre("save", async function(next){
   const salt = await bcrypt.genSalt();
@@ -64,7 +60,7 @@ UserSchema.pre("save", async function(next){
   next();
 })
 
-// Se logger avec l'email et le mot de passe
+// Se logger avec l'email et le mot de passe (comparer avec la db)
 
 UserSchema.statics.login = async function(email, password) {
   const user = await this.findOne({email});
@@ -78,4 +74,7 @@ UserSchema.statics.login = async function(email, password) {
   throw Error("Email incorrect");
 };
 
-module.exports = mongoose.model("Users", UserSchema);
+
+const User = mongoose.model("users", UserSchema);
+
+module.exports = User;

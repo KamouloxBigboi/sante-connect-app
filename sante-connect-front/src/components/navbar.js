@@ -1,11 +1,11 @@
-/* Put a navbar for screens here with sign-in/sign-out options */
+// Put a navbar here with protected options : home, forum, about and logout links
 
-import { React } from "react";
+import React from "react";
 import { Component } from "react";
 import { MenuData } from "./menudata.js";
-import './navbar-styles.css';
+import './navbarStyles.css' 
 
-class Navbar extends Component{
+class NavBar extends Component{
     render(){
         return(
             <nav className="NavbarItems">
@@ -31,4 +31,4 @@ class Navbar extends Component{
     }
 }
 
-export default Navbar
+export default NavBar;

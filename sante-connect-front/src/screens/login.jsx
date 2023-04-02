@@ -38,7 +38,6 @@ const theme = createTheme();
 export default function SignIn() {
 
   const navigate = useNavigate()
-  
   const [values, setValues] = useState({email: "", password: ""})
 
 // Générateur d'erreur avec toast pour l'affichage
@@ -55,7 +54,7 @@ export default function SignIn() {
     event.preventDefault();
     try{
       const { data } = await axios.post(
-          "http://localhost:5000/sign-in", 
+          "http://localhost:5000/login", 
         {
           ...values,
         },
@@ -71,7 +70,7 @@ export default function SignIn() {
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-        navigate("/")
+        navigate("/dashboard")
       }
     } 
   } catch (err) {
@@ -160,7 +159,7 @@ export default function SignIn() {
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="/sign-up" variant="body2">
+                    <Link href="/register" variant="body2">
                       {"Pas de compte ? Inscrivez-vous "}
                     </Link>
                   </Grid>

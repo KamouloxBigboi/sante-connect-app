@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
-const authRoutes = require("./routes/auth.routes.js");
+const { checkUser } = require("./middleware/authMiddleware.js")
+const { SignIn, SignUp } = require("./controllers/authController.js");
 
 const PORT = 5000
 
@@ -33,5 +34,7 @@ app.listen(PORT, () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   
-  app.use("/", authRoutes)
+  app.use("/dashboard", checkUser);
+  app.use("/login", SignIn);
+  app.use("/register", SignUp);
   

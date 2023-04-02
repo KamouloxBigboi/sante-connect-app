@@ -1,17 +1,15 @@
-// Data for navbar menu in non-logged condition with unprotected options (screens) and about page
-// CSS Styles are the same for both navbars
 
-import './navbar-styles.css'
+import './navbarStyles.css'
 
 export const MenuData = [
     {
         title: "Se connecter",
-        url: "/sign-in",
+        url: "/login",
         className: "nav-links",
     },
     {
         title: "S'inscrire",
-        url: "/sign-up",
+        url: "/register",
         className: "nav-links",
     },
     {

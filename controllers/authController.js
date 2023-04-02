@@ -1,4 +1,4 @@
-const User = require("../models/user-model");
+const User = require("../models/userModel.js")
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
@@ -54,22 +54,22 @@ module.exports.SignUp = async (req, res) => {
                  country} = req.body;
 
                 const newUser = await User.create({firstname, 
-                                                  lastname, 
-                                                  email,
-                                                  age, 
-                                                  password, 
-                                                  gender, 
-                                                  occupation, 
-                                                  country});
+                                                   lastname, 
+                                                   email,
+                                                   age, 
+                                                   password, 
+                                                   gender, 
+                                                   occupation, 
+                                                   country});
         const token = createToken(newUser._id);
         res.cookie("jwt", token,{
             withCredentials: true,
             httpOnly: false,
             secure: true,
-            sameSite: true,
+            sameSite: false,
             maxAge: maxAge*1000,
         })
-        res.status(201).json({user:newUser._id, created: true });
+        res.status(201).json({user: newUser._id, created: true });
     } catch (err) {
         console.log(err);
         const errors = handleErrors(err);
@@ -80,13 +80,14 @@ module.exports.SignUp = async (req, res) => {
     module.exports.SignIn = async (req, res) => {
         try{
             const  { email, password } = req.body;
-            const user = await User.login(email, password);
+            console.log(email, password)
+            const user = await User.login( email, password );
             const token = createToken(user._id);
             res.cookie("jwt", token,{
                 withCredentials: true,
                 httpOnly: false,
                 secure: true,
-                sameSite: true,
+                sameSite: false,
                 maxAge: maxAge*1000,
             })
             res.status(200).json({user: user._id, created: true });

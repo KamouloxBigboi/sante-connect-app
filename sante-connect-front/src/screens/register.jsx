@@ -61,7 +61,7 @@ export default function SignUp() {
     event.preventDefault();
     try{
       const { data } = await axios.post(
-          "http://localhost:5000/sign-up", 
+          "http://localhost:5000/register", 
         {
           ...values,
         },
@@ -77,7 +77,7 @@ export default function SignUp() {
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-        navigate("/sign-in")
+        navigate("/login")
       }
     } 
   } catch (err) {
@@ -223,7 +223,7 @@ export default function SignUp() {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="./sign-in" variant="body2">
+                  <Link href="./login" variant="body2">
                     Déjà un compte chez Santé Connect ? <br/> Connectez-vous !
                   </Link>
                 </Grid>
