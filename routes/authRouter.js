@@ -13,11 +13,12 @@ authRouter.use(cors({
 
 // chemins protégés par vérification jwt/cookie
 
-authRouter.post("/dashboard", checkUser);
+authRouter.post("/dashboard", function(req, res) {
+  checkUser
+});
 
 // chemins non-protégés
 
-authRouter.get("/login", SignIn);
 authRouter.post("/login", SignIn);
 authRouter.post("/register", SignUp);
 

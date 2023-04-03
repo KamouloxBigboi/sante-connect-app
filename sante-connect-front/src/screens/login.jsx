@@ -63,7 +63,6 @@ export default function SignIn() {
         }
        );
 
-      console.log(data)
       if (data) {
         if (data.errors) {
           const {email, password} = data.errors;

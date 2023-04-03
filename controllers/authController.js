@@ -80,7 +80,6 @@ module.exports.SignUp = async (req, res) => {
     module.exports.SignIn = async (req, res) => {
         try{
             const  { email, password } = req.body;
-            console.log(email, password)
             const user = await User.login( email, password );
             const token = createToken(user._id);
             res.cookie("jwt", token,{
