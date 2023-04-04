@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import useLogout from "../hooks/UseLogOut";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import "../index.css"
 
 export default function Dashboard() {
 
@@ -30,18 +32,11 @@ export default function Dashboard() {
     verifyUser();
   }, [cookies, navigate, removeCookie]);
 
-  const logOut = () => {
-    removeCookie("jwt");
-    navigate("/register");
-  };
-  
   return (
-    <>
-      <main className="private" style={{ padding: "1rem 0" }}>
-        <h2> Bienvenue sur Santé Connect ! </h2>
-        <button onClick={logOut}> Se déconnecter </button>
+      <main style={{ padding: "1rem 0" }}>
+        <h2> Votre tableau de bord </h2>
+        <button onClick={useLogout}> Se déconnecter </button>
         <ToastContainer />
       </main>
-    </>
   );
 };

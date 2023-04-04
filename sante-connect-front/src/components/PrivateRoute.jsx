@@ -1,15 +1,24 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Route, useNavigate } from 'react-router-dom';
+import { UserContext } from './../hooks/UserContext';
+import Loading from './Loading';
 
-export default function PrivateRoute(){
+
+export default function PrivateRoute(props) {   
+    const { user, isLoading } = useContext(UserContext); 
+    console.log(user, isLoading);
 
     const navigate = useNavigate();
-    const logOut = () => {
-            navigate("/login");
+    const { component: Component,
+        ...rest } = props;
+
+      if(isLoading) {
+          return <Loading/>
         }
 
-    return  <div className="private">
-            <h1> Page confidentielle </h1>
-            <button onClick={logOut}> Log out </button>
-            </div>;
-}
+      if(user){
+        return ( <Route {...rest} render={(props) => (<Component {...props}/>)}/>)
+        } else {
+          return navigate('/login')
+        };
+};

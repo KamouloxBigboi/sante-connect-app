@@ -2,6 +2,7 @@ const User = require("../models/userModel.js")
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
+const catchAsync = require('./../utils/catchAsync');
 
 app = express();
 app.use(cors());
@@ -95,4 +96,12 @@ module.exports.SignUp = async (req, res) => {
                 const errors = handleErrors(err);
                 res.json({errors, created: false});
             }
-        };  
+        }; 
+    
+    module.exports.logOut = catchAsync( async (req, res) =>{
+        res.cookie('jwt', 'loggedout', {
+            expires: new Date(Date.now() + 1 * 1000),
+            httpOnly: true
+        });
+        res.status(200).send('user is logged out');
+    });

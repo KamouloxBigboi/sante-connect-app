@@ -1,5 +1,4 @@
-const {SignIn, SignUp} = require('../controllers/authController.js');
-const checkUser = require("../middleware/authMiddleware.js")
+const {SignIn, SignUp, logOut} = require('../controllers/authController.js');
 const express = require('express');
 const cors = require('cors');
 
@@ -11,15 +10,10 @@ authRouter.use(cors({
     credentials: true,
   }));
 
-// chemins protégés par vérification jwt/cookie
-
-authRouter.post("/dashboard", function(req, res) {
-  checkUser
-});
-
 // chemins non-protégés
 
 authRouter.post("/login", SignIn);
 authRouter.post("/register", SignUp);
+authRouter.get("/logout", logOut)
 
 module.exports = authRouter ;

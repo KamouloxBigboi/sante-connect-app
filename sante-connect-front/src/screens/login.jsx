@@ -79,6 +79,7 @@ export default function SignIn() {
 
   return (
     
+  <>
     <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
@@ -161,15 +162,16 @@ export default function SignIn() {
                     <Link href="/register" variant="body2">
                       {"Pas de compte ? Inscrivez-vous "}
                     </Link>
+                   <ToastContainer />
                   </Grid>
-                </Grid>
-                <ToastContainer />
+                 </Grid>
                 <Copyright sx={{ mt: 5 }} />
               </Box>
             </Box>
           </Grid>
         </Grid>
-        <Footer />
-      </ThemeProvider>
+       </ThemeProvider>
+      <Footer />
+    </>
   ); 
 }
