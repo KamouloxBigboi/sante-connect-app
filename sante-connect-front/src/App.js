@@ -27,12 +27,12 @@ function App() {
       <userContext.Provider value={{ user, setUser, isLoading }}>
           <NavBar/>
           <Routes>
-            <Route exact path='/login' element={<SignIn />} /> 
+            <Route path='/login' index element={<SignIn />} /> 
             <Route path="/register" element={<SignUp />} />
             <Route path="/about" element={<About/>} />
             <Route path='*' element={<NotFound />}/>
-            <Route element={<PrivateRoutes />}>
-              <Route exact path='/' element={<Home/>} />
+            <Route exact path="/" element={<PrivateRoutes />}>
+              <Route path='/home' element={<Home/>} />
               <Route path='/dashboard' element={<Dashboard/>} />
               <Route path='/user' element={<User/>} />
               <Route path='/forum' element={<Forum/>} />
