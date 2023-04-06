@@ -1,14 +1,14 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import removeCookie from 'react-cookie'
+import removeCookie from 'react-cookie';
 import axios from 'axios';
 
 export default function useLogout() {
-    
-    let navigate = useNavigate();
 
+    let navigate = useNavigate();
     const logoutUser = async () => {
         try {
-           await axios({
+            await axios({
                 method: 'GET',
                 url: '/logout',
             }).then(res => { 
@@ -21,8 +21,14 @@ export default function useLogout() {
         } 
     }
 
+    useEffect(() => {
+        window.addEventListener('beforeunload', logoutUser);
+        return () => {
+            window.removeEventListener('beforeunload', logoutUser);
+        };
+    }, []);
+
     return {
         logoutUser
     }
-
 }

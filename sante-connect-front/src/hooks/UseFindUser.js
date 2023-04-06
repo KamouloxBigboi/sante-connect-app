@@ -2,8 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function useFindUser() {
-    
-  const [user, setUser] = useState(" ");
+
+  const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
 
   async function findUser() {

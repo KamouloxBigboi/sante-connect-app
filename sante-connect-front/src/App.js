@@ -8,13 +8,13 @@ import SignIn from './screens/login.jsx';
 import SignUp from './screens/register.jsx'
 import About from './components/about.js';
 import NotFound from './components/not-found.js';
-import PrivateRoutes from '../src/utils/PrivateRoutes.jsx'
 import Home from './components/home.js';
 import Dashboard from './components/dashboard.js';
 import User from './components/user-account.js';
 import Forum from './components/forum.js';
 import NavBar from './components/navbar.js';
 import Footer from './components/footer.js';
+import PrivateOutlet from './utils/PrivateOutlet.jsx';
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -25,21 +25,22 @@ function App() {
 
     <BrowserRouter>
       <userContext.Provider value={{ user, setUser, isLoading }}>
-          <NavBar/>
+        <NavBar/>
           <Routes>
-            <Route path='/login' index element={<SignIn />} /> 
+            <Route index element={<SignIn />} />
+            <Route path='/login' element={<SignIn />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/about" element={<About/>} />
             <Route path='*' element={<NotFound />}/>
-            <Route exact path="/" element={<PrivateRoutes />}>
+            <Route element={<PrivateOutlet />}>
               <Route path='/home' element={<Home/>} />
               <Route path='/dashboard' element={<Dashboard/>} />
-              <Route path='/user' element={<User/>} />
+              <Route path='/user' element={<User/>} />  
               <Route path='/forum' element={<Forum/>} />
               <Route path='/logout' element={<useLogout/>} />
             </Route>
           </Routes>
-          <Footer />
+        <Footer />
       </userContext.Provider>
     </BrowserRouter>
     );

@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { userContext } from '../hooks/UserContext';
 import Loading from '../components/Loading';
 
-export default function PrivateRoutes() {
+export default function PrivateOutlet() {
   const navigate = useNavigate();
   const { user, isLoading } = useContext(userContext);
 

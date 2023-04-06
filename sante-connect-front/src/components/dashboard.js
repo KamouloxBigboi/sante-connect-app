@@ -11,13 +11,14 @@ export default function Dashboard() {
   const [cookies, removeCookie] = useCookies([]);
 
   useEffect(() => {
-    
+
     const verifyUser = async () => {
+
       if (!cookies.jwt) {
         navigate("/login");
       } else {
         const { data } = await axios.post(
-          "http://localhost:5000",
+          "http://localhost:5000/",
           {},
           { withCredentials: true }
         );
@@ -40,4 +41,4 @@ export default function Dashboard() {
       <ToastContainer />
     </main>
   );
-}
+};

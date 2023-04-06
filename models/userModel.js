@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
 
   age: {
     type: Number,
-    required: true,
+    required: [true, "Pour l'inscription sur cette appli, il faut avoir 16 ans et plus"],
     min: 16
   },
 
