@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import removeCookie from 'react-cookie'
 import axios from 'axios';
 
 export default function useLogout() {
+    
     let navigate = useNavigate();
 
     const logoutUser = async () => {

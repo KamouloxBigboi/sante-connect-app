@@ -1,36 +1,35 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import useLogout from "../hooks/UseLogOut";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "../index.css"
+import useLogout from "../hooks/UseLogOut.js";
+import axios from "axios";
+import "../index.css";
 
 export default function Dashboard() {
 
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
 
-  useEffect(() => {
-    const verifyUser = async () => {
-      if (!cookies.jwt) {
+  const verifyUser = async () => {
+    if (!cookies.jwt) {
+      navigate("/login");
+    } else {
+      const { data } = await axios.post(
+        "http://localhost:5000",
+        {},
+        { withCredentials: true }
+      );
+      if (!data.status) {
+        removeCookie("jwt");
         navigate("/login");
       } else {
-        const { data } = await axios.post(
-          "http://localhost:5000",
-          {},
-          { withCredentials: true }
-        );
-        if (!data.status) {
-          removeCookie("jwt");
-          navigate("/login");
-        } else {
-          toast(`Bonjour ${data.user}`, { theme: "dark" });
-        }
+        toast(`Bonjour ${data.user}`, { theme: "dark" });
       }
-    };
-    verifyUser();
-  }, [cookies, navigate, removeCookie]);
+    }
+  };
+
+  verifyUser();
 
   return (
       <main style={{ padding: "1rem 0" }}>

@@ -1,4 +1,3 @@
-
 import './navbarStyles.css'
 
 export const MenuData = [

@@ -1,14 +1,18 @@
 import { useState, useContext } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { UserContext } from './UserContext';  
+import axios from 'axios';
+
+// Fonction d'authentification côté front
 
 export default function useAuth() {
+
     let navigate = useNavigate();
     const { setUser } = useContext(UserContext);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(" ");
 
-    //set user
+    // Mise en place de l'utilisateur
+
     const setUserContext = async () => {
         return await axios.get('/user').then(res => {         
             setUser(res.data.currentUser);  
@@ -18,7 +22,7 @@ export default function useAuth() {
         })
     }
 
-    //register user 
+    // Fonction d'inscription de l'utilisateur (côté front)
 
     const SignUp = async (data) => {
         console.log(data);
@@ -47,7 +51,7 @@ export default function useAuth() {
             })
         };
 
-    //login user 
+    // Fonction de connexion de l'utilisateur (côté front)
 
     const SignIn = async (data) => {
         const { email, password } = data;

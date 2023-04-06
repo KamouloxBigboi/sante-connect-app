@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
+// Fonction qui vérifie si l'utilisateur est toujours connecté
+
 module.exports.checkUser = (req, res, next) => {
     const token = req.cookie.jwt;
     if(token) {

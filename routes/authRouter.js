@@ -1,4 +1,5 @@
 const {SignIn, SignUp, logOut} = require('../controllers/authController.js');
+const checkUser = require('../middleware/authMiddleware.js')
 const express = require('express');
 const cors = require('cors');
 
@@ -10,7 +11,11 @@ authRouter.use(cors({
     credentials: true,
   }));
 
-// chemins non-protégés
+authRouter.get('/', function (req, res) {
+    res.send(checkUser)
+  });
+
+// chemins non-protégés 
 
 authRouter.post("/login", SignIn);
 authRouter.post("/register", SignUp);

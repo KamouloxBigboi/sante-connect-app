@@ -2,7 +2,6 @@ const User = require("../models/userModel.js")
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const cors = require('cors');
-const catchAsync = require('./../utils/catchAsync');
 
 app = express();
 app.use(cors());
@@ -41,7 +40,7 @@ const handleErrors = (err) => {
     return errors; 
 };
 
-
+// Fonction d'inscription de l'utilisateur dans la base de donnée avec jeton JWT et cookie
 
 module.exports.SignUp = async (req, res) => {
     try{
@@ -67,7 +66,7 @@ module.exports.SignUp = async (req, res) => {
             withCredentials: true,
             httpOnly: false,
             secure: true,
-            sameSite: false,
+            sameSite: 'none',
             maxAge: maxAge*1000,
         })
         res.status(201).json({user: newUser._id, created: true });
@@ -78,6 +77,8 @@ module.exports.SignUp = async (req, res) => {
         };
     };  
     
+// Fonction de connexion de l'utilisateur dans la base de donnée avec jeton JWT et cookie
+
     module.exports.SignIn = async (req, res) => {
         try{
             const  { email, password } = req.body;
@@ -87,7 +88,7 @@ module.exports.SignUp = async (req, res) => {
                 withCredentials: true,
                 httpOnly: false,
                 secure: true,
-                sameSite: false,
+                sameSite: 'none',
                 maxAge: maxAge*1000,
             })
             res.status(200).json({user: user._id, created: true });
@@ -96,12 +97,20 @@ module.exports.SignUp = async (req, res) => {
                 const errors = handleErrors(err);
                 res.json({errors, created: false});
             }
-        }; 
-    
-    module.exports.logOut = catchAsync( async (req, res) =>{
-        res.cookie('jwt', 'loggedout', {
-            expires: new Date(Date.now() + 1 * 1000),
-            httpOnly: true
-        });
-        res.status(200).send('user is logged out');
-    });
+        };
+
+// Fonction de déconnexion de l'utilisateur dans la base de donnée
+        
+    module.exports.logOut = async (req, res) =>{
+        try{
+            res.cookie('jwt', 'loggedout', {
+                expires: new Date(Date.now() + 1 * 1000),
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none'
+            });
+            res.status(200).send('user is logged out');
+        } catch {
+            res.status(400).json({message: 'Logging out failed'})
+        };
+    };

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../hooks/UserContext"
+import { userContext } from "../hooks/UserContext"
 import { useNavigate } from "react-router-dom";
 import './home.css'
 
@@ -7,7 +7,7 @@ export default function Home() {
 
     const navigate = useNavigate();
    
-    const { user } = useContext(UserContext);
+    const { user } = useContext(userContext);
         if(user) {
             navigate('/dashboard');
         };

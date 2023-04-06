@@ -1,5 +1,6 @@
-import { createContext } from 'react'; 
+import { createContext } from "react";
+import user from './UseFindUser'
 
-//set initial value of user to null (pre-login)
+// Initialise le Contexte 
 
-export const UserContext = createContext(null);
+export const userContext = createContext(user);
