@@ -1,17 +1,10 @@
-import React, { useContext } from "react";
-import { userContext } from "../hooks/UserContext"
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import './home.css'
 
 export default function Home() {
 
     const navigate = useNavigate();
-   
-    const { user } = useContext(userContext);
-        if(user) {
-            navigate('/dashboard');
-        };
-
     const logOut = () => {
             navigate("/login");
         };

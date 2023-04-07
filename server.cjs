@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
 const authRouter = require("./routes/authRouter")
-const { SignIn, SignUp } = require("./controllers/authController.js");
+const { SignIn, SignUp, LogOut } = require("./controllers/authController.js");
 
 const PORT = 5000
 
@@ -38,4 +38,4 @@ app.listen(PORT, () => {
   app.use("/", authRouter);
   app.use("/login", SignIn);
   app.use("/register", SignUp);
-  
+  app.use("/logout", LogOut)

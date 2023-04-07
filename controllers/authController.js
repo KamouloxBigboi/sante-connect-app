@@ -101,7 +101,7 @@ module.exports.SignUp = async (req, res) => {
 
 // Fonction de déconnexion de l'utilisateur dans la base de donnée
         
-    module.exports.logOut = async (req, res) =>{
+    module.exports.LogOut = async (req, res) =>{
         try{
             res.cookie('jwt', 'loggedout', {
                 expires: new Date(Date.now() + 1 * 1000),
@@ -110,6 +110,7 @@ module.exports.SignUp = async (req, res) => {
                 sameSite: 'none'
             });
             res.status(200).send('user is logged out');
+            alert("User Logged Out")
         } catch {
             res.status(400).json({message: 'Logging out failed'})
         };

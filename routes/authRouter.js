@@ -1,4 +1,4 @@
-const {SignIn, SignUp, logOut} = require('../controllers/authController.js');
+const {SignIn, SignUp, LogOut} = require('../controllers/authController.js');
 const checkUser = require('../middleware/authMiddleware.js')
 const express = require('express');
 const cors = require('cors');
@@ -19,6 +19,6 @@ authRouter.get('/', function (req, res) {
 
 authRouter.post("/login", SignIn);
 authRouter.post("/register", SignUp);
-authRouter.get("/logout", logOut)
+authRouter.get("/logout", LogOut)
 
 module.exports = authRouter ;

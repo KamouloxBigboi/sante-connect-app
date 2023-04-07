@@ -26,11 +26,6 @@ export const MenuDataLogged = [
         title: "Se déconnecter",
         url: "/logout",
         className: "nav-links",
-    },
-    {
-        title: "À propos",
-        url: "/about",
-        className: "nav-links",
     }
 ];
 

@@ -2,10 +2,11 @@
 
 import React from "react";
 import { Component } from "react";
-import { MenuData } from "./menudata.js";
+import { MenuDataLogged } from "./menudatalogged.js";
 import './navbarStyles.css' 
 
-class NavBar extends Component{
+class NavBarLogged extends Component{
+
     render(){
         return(
             <nav className="NavbarItems">
@@ -13,10 +14,9 @@ class NavBar extends Component{
                     <a href="/">
                         <img src={require("../img/logo.png")} width='80%' alt="logo"/>
                     </a>
-                </h1> 
-                <div className="bienvenue"> Bienvenue sur Santé Connect </div>
+                </h1>
                 <ul className="nav-menu">
-                {MenuData.map((item, index) => {
+                {MenuDataLogged.map((item, index) => {
                     return (
                         <li key={index}>
                             <a href={item.url}
@@ -32,4 +32,4 @@ class NavBar extends Component{
     }
 }
 
-export default NavBar;
+export default NavBarLogged;

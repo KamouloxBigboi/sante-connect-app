@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
-import useLogout from "../hooks/UseLogOut.js";
+import LogOut from "../hooks/useLogOut.js";
 import axios from "axios";
 import "../index.css";
 
 export default function Dashboard() {
+
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
 
@@ -17,7 +18,7 @@ export default function Dashboard() {
       if (!cookies.jwt) {
         navigate("/login");
       } else {
-        const { data } = await axios.post(
+        const { data } = await axios.get(
           "http://localhost:5000/",
           {},
           { withCredentials: true }
@@ -37,7 +38,7 @@ export default function Dashboard() {
   return (
     <main style={{ padding: "1rem 0" }}>
       <h2> Votre tableau de bord </h2>
-      <button onClick={useLogout}> Se déconnecter </button>
+      <button onClick={LogOut}> Se déconnecter </button>
       <ToastContainer />
     </main>
   );

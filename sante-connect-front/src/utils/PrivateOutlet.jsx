@@ -1,20 +1,17 @@
 import React, { useContext } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { userContext } from '../hooks/UserContext';
+import { Outlet, Navigate } from 'react-router-dom';
+import { userContext } from '../hooks/userContext';
+import { useAuth } from '../hooks/useAuth';
 import Loading from '../components/Loading';
 
 export default function PrivateOutlet() {
-  const navigate = useNavigate();
-  const { user, isLoading } = useContext(userContext);
+
+  const auth = useAuth();
+  const isLoading = useContext(userContext);
 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (!user) {
-    navigate('/login');
-    return null;
-  }
-
-  return <Outlet />;
+  return auth ? <Outlet /> : <Navigate to="/login" />;
 }

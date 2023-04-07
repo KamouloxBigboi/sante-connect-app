@@ -2,8 +2,8 @@ import React  from 'react';
 import { BrowserRouter,
          Routes, 
          Route } from 'react-router-dom';
-import { userContext } from './hooks/UserContext.js';
-import useFindUser from './hooks/UseFindUser.js';
+import { useAuth } from './hooks/useAuth.js';
+import LogOut from './hooks/useLogOut.js';
 import SignIn from './screens/login.jsx';
 import SignUp from './screens/register.jsx'
 import About from './components/about.js';
@@ -12,36 +12,38 @@ import Home from './components/home.js';
 import Dashboard from './components/dashboard.js';
 import User from './components/user-account.js';
 import Forum from './components/forum.js';
-import NavBar from './components/navbar.js';
 import Footer from './components/footer.js';
+import NavBarLogged from './components/navbarlogged.js';
+import NavBar from './components/navbar.js';
 import PrivateOutlet from './utils/PrivateOutlet.jsx';
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
-  const { user, setUser, isLoading } = useFindUser();
+  const { auth } = useAuth();
 
   return (
 
     <BrowserRouter>
-      <userContext.Provider value={{ user, setUser, isLoading }}>
-        <NavBar/>
+      {auth ? <NavBarLogged /> : <NavBar/>}
           <Routes>
             <Route index element={<SignIn />} />
             <Route path='/login' element={<SignIn />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/about" element={<About/>} />
             <Route path='*' element={<NotFound />}/>
-            <Route element={<PrivateOutlet />}>
-              <Route path='/home' element={<Home/>} />
-              <Route path='/dashboard' element={<Dashboard/>} />
-              <Route path='/user' element={<User/>} />  
-              <Route path='/forum' element={<Forum/>} />
-              <Route path='/logout' element={<useLogout/>} />
-            </Route>
+            <Route path='/home' 
+            element={<PrivateOutlet><Home/></PrivateOutlet>} />
+            <Route path='/dashboard' 
+            element={<PrivateOutlet><Dashboard/></PrivateOutlet>} />
+            <Route path='/user' 
+            element={<PrivateOutlet><User/></PrivateOutlet>} />  
+            <Route path='/forum' 
+            element={<PrivateOutlet><Forum/></PrivateOutlet>} />
+            <Route path='/logout' 
+            element={<PrivateOutlet><LogOut/></PrivateOutlet>} />
           </Routes>
         <Footer />
-      </userContext.Provider>
     </BrowserRouter>
     );
   }

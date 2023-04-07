@@ -1,9 +1,9 @@
 
-import * as React from 'react';
+import React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutlet } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -17,6 +17,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import backGround from '../img/background_connexion.jpeg'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAuth } from '../hooks/useAuth';
 import { ToastContainer, toast} from "react-toastify";
 import Footer from '../components/footer';
   
@@ -37,10 +38,9 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const navigate = useNavigate()
-  const [values, setValues] = useState({email: "", password: ""})
-
-// Générateur d'erreur avec toast pour l'affichage
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const [values, setValues] = useState({ email: "", password: "" });
 
   const generateError = (err) => {
     toast.error(err, {
@@ -48,34 +48,36 @@ export default function SignIn() {
     });
   };
 
-  // Fonction enregistrement utilisateur asynchrone dans la base de donnée
-  
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try{
+    try {
       const { data } = await axios.post(
-          "http://localhost:5000/login", 
+        "http://localhost:5000/login",
         {
           ...values,
         },
         {
           withCredentials: true,
         }
-       );
-
+      );
+  
       if (data) {
         if (data.errors) {
-          const {email, password} = data.errors;
+          const { email, password } = data.errors;
           if (email) generateError(email);
           else if (password) generateError(password);
         } else {
-        navigate("/dashboard")
+          alert('Logged!');
+          setAuth(true);
+          navigate('/dashboard');
+        }
       }
-    } 
-  } catch (err) {
-    console.log(err);
-  }
-};
+    } catch (error) {
+      console.error("Connexion failed");
+      console.error(error);
+    };
+  };
+  
 
   return (
     

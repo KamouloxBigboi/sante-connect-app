@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner&display=swap');
 
+.bienvenue {
+    display: flex;
+    align-items: center;
+    font-family: 'Edu TAS Beginner', cursive;
+}
+
 .NavbarItems {
     display: flex;
     justify-content: space-between;
@@ -26,13 +32,12 @@
 .nav-menu{
     display: grid;
     grid-template-columns: repeat(5, auto);
-    gap: 10%;
+    gap: 9%;
     list-style: none;
     align-items: center;
     text-align: center;
     justify-content: end;
     font-family: 'Edu TAS Beginner', cursive;
-    font-style: bold;
 }
 
 .nav-links {
